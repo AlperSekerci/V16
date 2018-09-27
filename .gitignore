@@ -1,0 +1,11 @@
+*.pdb
+*.ilk
+*.bak
+*.bak2
+*.cryasset
+*.log
+*.dds
+user/
+logbackups/
+solutions/
+ActionLogs/
