@@ -42,6 +42,7 @@
         "type": "EPluginType::Native",
         "path": "bin/win_x64/Game.dll"
       },
+	  { "type": "EPluginType::Native", "path": "bin/win_x64/Plugin.dll"},
       {
         "type": "EPluginType::Native",
         "path": "CryGamePlatform",

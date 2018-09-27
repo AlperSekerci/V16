@@ -16,4 +16,12 @@
   <Physics sound_obstruction="0.5" />
  </SurfaceType>
  
+  <SurfaceType name="mat_wheel">
+  <Physics friction="999" elasticity="0" pierceability="7" can_shatter="1" sound_obstruction="0.5" />
+ </SurfaceType>
+ 
+ <SurfaceType name="mat_ice">
+  <Physics friction="0" elasticity="0" pierceability="7" can_shatter="1" sound_obstruction="0.5" />
+ </SurfaceType>
+ 
 </SurfaceTypes>

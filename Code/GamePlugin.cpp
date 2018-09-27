@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "GamePlugin.h"
 
-#include "Components/Player.h"
-
 #include <IGameObjectSystem.h>
 #include <IGameObject.h>
 
@@ -33,7 +31,7 @@ bool CGamePlugin::Initialize(SSystemGlobalEnvironment& env, const SSystemInitPar
 {
 	// Register for engine system events, in our case we need ESYSTEM_EVENT_GAME_POST_INIT to load the map
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this, "CGamePlugin");
-	
+
 	return true;
 }
 
@@ -42,53 +40,55 @@ void CGamePlugin::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lp
 	switch (event)
 	{
 		// Called when the game framework has initialized and we are ready for game logic to start
-		case ESYSTEM_EVENT_GAME_POST_INIT:
+	case ESYSTEM_EVENT_GAME_POST_INIT:
+	{
+		// Listen for client connection events, in order to create the local player
+		gEnv->pGameFramework->AddNetworkedClientListener(*this);
+
+		// Don't need to load the map in editor
+		if (!gEnv->IsEditor())
 		{
-			// Listen for client connection events, in order to create the local player
-			gEnv->pGameFramework->AddNetworkedClientListener(*this);
-
-			// Don't need to load the map in editor
-			if (!gEnv->IsEditor())
-			{
-				gEnv->pConsole->ExecuteString("map example", false, true);
-			}
+			gEnv->pConsole->ExecuteString("map car_simulation", false, true);
 		}
-		break;
+	}
+	break;
 
-		case ESYSTEM_EVENT_REGISTER_SCHEMATYC_ENV:
+	case ESYSTEM_EVENT_REGISTER_SCHEMATYC_ENV:
+	{
+		// Register all components that belong to this plug-in
+		auto staticAutoRegisterLambda = [](Schematyc::IEnvRegistrar& registrar)
 		{
-			// Register all components that belong to this plug-in
-			auto staticAutoRegisterLambda = [](Schematyc::IEnvRegistrar& registrar)
-			{
-				// Call all static callback registered with the CRY_STATIC_AUTO_REGISTER_WITH_PARAM
-				Detail::CStaticAutoRegistrar<Schematyc::IEnvRegistrar&>::InvokeStaticCallbacks(registrar);
-			};
+			// Call all static callback registered with the CRY_STATIC_AUTO_REGISTER_WITH_PARAM
+			Detail::CStaticAutoRegistrar<Schematyc::IEnvRegistrar&>::InvokeStaticCallbacks(registrar);
+		};
 
-			if (gEnv->pSchematyc)
-			{
-				gEnv->pSchematyc->GetEnvRegistry().RegisterPackage(
-					stl::make_unique<Schematyc::CEnvPackage>(
-						CGamePlugin::GetCID(),
-						"EntityComponents",
-						"Crytek GmbH",
-						"Components",
-						staticAutoRegisterLambda
-						)
-				);
-			}
+		if (gEnv->pSchematyc)
+		{
+			gEnv->pSchematyc->GetEnvRegistry().RegisterPackage(
+				stl::make_unique<Schematyc::CEnvPackage>(
+					CGamePlugin::GetCID(),
+					"EntityComponents",
+					"Crytek GmbH",
+					"Components",
+					staticAutoRegisterLambda
+					)
+			);
 		}
-		break;
+	}
+	break;
 	}
 }
 
 bool CGamePlugin::OnClientConnectionReceived(int channelId, bool bIsReset)
 {
+	return true;
+
 	// Connection received from a client, create a player entity and component
 	SEntitySpawnParams spawnParams;
 	spawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
 	spawnParams.sName = "Player";
 	spawnParams.nFlags |= ENTITY_FLAG_NEVER_NETWORK_STATIC;
-	
+
 	// Set local player details
 	if (m_players.size() == 0 && !gEnv->IsDedicated())
 	{
@@ -103,9 +103,6 @@ bool CGamePlugin::OnClientConnectionReceived(int channelId, bool bIsReset)
 		pPlayerEntity->GetNetEntity()->SetChannelId(channelId);
 		pPlayerEntity->GetNetEntity()->BindToNetwork();
 
-		// Create the player component instance
-		CPlayerComponent* pPlayer = pPlayerEntity->GetOrCreateComponentClass<CPlayerComponent>();
-
 		// Push the component into our map, with the channel id as the key
 		m_players.emplace(std::make_pair(channelId, pPlayerEntity->GetId()));
 	}
@@ -115,19 +112,6 @@ bool CGamePlugin::OnClientConnectionReceived(int channelId, bool bIsReset)
 
 bool CGamePlugin::OnClientReadyForGameplay(int channelId, bool bIsReset)
 {
-	// Revive players when the network reports that the client is connected and ready for gameplay
-	auto it = m_players.find(channelId);
-	if (it != m_players.end())
-	{
-		if (IEntity* pPlayerEntity = gEnv->pEntitySystem->GetEntity(it->second))
-		{
-			if (CPlayerComponent* pPlayer = pPlayerEntity->GetComponent<CPlayerComponent>())
-			{
-				pPlayer->Revive();
-			}
-		}
-	}
-
 	return true;
 }
 
