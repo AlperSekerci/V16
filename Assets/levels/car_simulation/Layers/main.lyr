@@ -31,7 +31,7 @@
       </properties>
      </Component>
      <Component CryXmlVersion="2" TypeGUID="5a5c864b-ebe0-4f3c-8c6b-6fe4ac0c5e10" TypeName="CCarDynamicsComp" GUID="17e422c5-d5ea-5dcc-8cd2-ab79b27a2aed" Name="" UserAdded="true">
-      <properties Wheelbase="2" Gas="7" Brake="70"/>
+      <properties Wheelbase="2" Gas="17" Brake="300"/>
      </Component>
      <Component CryXmlVersion="2" TypeGUID="52431c11-77ee-410a-a7a7-a7fa69e79685" TypeName="Cry::DefaultComponents::CBoxPrimitiveComponent" GUID="61337944-06b8-58e7-6dfc-8dc071d0e328" Name="" UserAdded="true">
       <Transform>

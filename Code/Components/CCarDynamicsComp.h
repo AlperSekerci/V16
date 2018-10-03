@@ -7,6 +7,9 @@
 #include "Common/ILogitechG920.h"
 
 #define CAR_BRAKE_MIN 1.0f
+#define CAR_DRIFT_THRESHOLD 0.5f
+#define CAR_DRIFT_CLAMP 10.0f
+#define CAR_DRIFT_FORCE 3.0f
 
 class CCarDynamicsComp final : public IEntityComponent
 {
@@ -27,6 +30,8 @@ private:
 	float mBrake = 70;
 	float GetDeviceGas(Vec3 vel);
 	float GetDeviceSteerAngle();
+
+	float driftVel = 0;
 
 public:
 	CCarDynamicsComp() = default;
