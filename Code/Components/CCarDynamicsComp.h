@@ -6,7 +6,7 @@
 #include "MyCamera.h"
 #include "Common/ILogitechG920.h"
 
-#define CAR_BRAKE_MIN 0.1f
+#define CAR_BRAKE_MIN 1.0f
 
 class CCarDynamicsComp final : public IEntityComponent
 {

@@ -1,7 +1,7 @@
 <ObjectLayer>
  <Layer Name="Main" FullName="Main" GUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Hidden="0" Frozen="0" Expanded="0" Type="0" Exportable="1" ExportLayerPak="1" DefaultLoaded="0" HavePhysics="1" IsDefaultColor="1">
   <LayerObjects>
-   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="5062bd81-5286-965f-2f3a-9848dd1660ff" Name="Entity-1" Pos="503.74878,512,33.749363" Rotate="1,0,0,0" ColorRGB="65535" Material="%engine%/engineassets/objects/helper" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
+   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="5062bd81-5286-965f-2f3a-9848dd1660ff" Name="Car" Pos="516.638,584.08398,67.904137" Rotate="0.99999821,0,0,-0.0019285083" ColorRGB="65535" Material="%engine%/engineassets/objects/helper" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
     <Properties />
     <Components>
      <Component CryXmlVersion="2" TypeGUID="912c6ce8-56f7-4ffa-9134-f98d4e307bd6" TypeName="Cry::DefaultComponents::CRigidBodyComponent" GUID="287a4314-9b3e-8b9c-1fed-232cf5afa01f" Name="" UserAdded="true">
@@ -56,15 +56,41 @@
      </Component>
     </Components>
    </Object>
-   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="4acfd648-a680-3031-0619-889c77693ac6" Name="Entity-2" Pos="503.19965,514.00366,31.823135" Rotate="1,0,0,0" ColorRGB="65535" Material="%engine%/engineassets/objects/helper" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
+   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="57c123c3-f09a-9cbd-f3a2-4a515326f610" Name="Entity-2" Pos="531.54419,516.55988,32.00029" Rotate="0.99254614,0.12186935,0,0" Scale="100,100,1" ColorRGB="65535" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
     <Properties />
     <Components>
-     <Component CryXmlVersion="2" TypeGUID="912c6ce8-56f7-4ffa-9134-f98d4e307bd6" TypeName="Cry::DefaultComponents::CRigidBodyComponent" GUID="20db1a59-2b33-d816-9db5-a96a3740e9ce" Name="" UserAdded="true">
-      <properties Networked="false" EnabledByDefault="true" Resting="false" Type="Static" SendCollisionSignal="true">
+     <Component CryXmlVersion="2" TypeGUID="6ddd0033-6aaa-4b71-b8ea-108258205e29" TypeName="Cry::DefaultComponents::CStaticMeshComponent" GUID="2264fb57-64b1-ba7d-9bb0-12e653352dd4" Name="" UserAdded="true">
+      <Transform>
+       <translation>
+        <position>
+         <element element="0"/>
+         <element element="0"/>
+         <element element="0"/>
+        </position>
+       </translation>
+       <rotation x="0" y="-0" z="0"/>
+       <scale>
+        <element element="1"/>
+        <element element="1"/>
+        <element element="1"/>
+       </scale>
+      </Transform>
+      <properties Type="RenderAndCollider" FilePath="%engine%/engineassets/objects/primitive_box.cgf" Material="%engine%/engineassets/materials/material_layers_default.mtl">
+       <Render ShadowSpec="Low" IgnoreVisArea="false" ViewDistRatio="100" LODDistance="100" GIMode="None"/>
+       <Physics WeightType="EWeightType::Immovable" Density="9.9999997e-05" Mass="10"/>
+      </properties>
+     </Component>
+     <Component CryXmlVersion="2" TypeGUID="912c6ce8-56f7-4ffa-9134-f98d4e307bd6" TypeName="Cry::DefaultComponents::CRigidBodyComponent" GUID="bdfd9026-6f58-3da1-e14f-be41156f9eb2" Name="" UserAdded="true">
+      <properties Networked="false" EnabledByDefault="true" Resting="false" Type="Static" SendCollisionSignal="false">
        <Buoyancy Damping="1" Density="1" Resistance="1"/>
       </properties>
      </Component>
-     <Component CryXmlVersion="2" TypeGUID="52431c11-77ee-410a-a7a7-a7fa69e79685" TypeName="Cry::DefaultComponents::CBoxPrimitiveComponent" GUID="a2def2c5-e5ff-f697-fc21-94ef0c2350e5" Name="" UserAdded="true">
+    </Components>
+   </Object>
+   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="b3aad7cb-e88e-0ba9-4a48-ad254267a474" Name="Entity-3" Pos="547.08282,391.98425,67.641396" Rotate="1,0,0,0" Scale="1000,1000,1" ColorRGB="65535" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
+    <Properties />
+    <Components>
+     <Component CryXmlVersion="2" TypeGUID="6ddd0033-6aaa-4b71-b8ea-108258205e29" TypeName="Cry::DefaultComponents::CStaticMeshComponent" GUID="1d0daa36-d76c-44b6-777c-db25eb284cd7" Name="" UserAdded="true">
       <Transform>
        <translation>
         <position>
@@ -80,30 +106,14 @@
         <element element="1"/>
        </scale>
       </Transform>
-      <properties Surface="" ReactToCollisions="true">
-       <Size x="100" y="100" z="0.1"/>
-       <Physics WeightType="EWeightType::Immovable" Density="9.9999997e-05" Mass="0.89999998"/>
+      <properties Type="RenderAndCollider" FilePath="%engine%/engineassets/objects/primitive_box.cgf" Material="road_track.mtl">
+       <Render ShadowSpec="Low" IgnoreVisArea="false" ViewDistRatio="100" LODDistance="100" GIMode="None"/>
+       <Physics WeightType="EWeightType::Immovable" Density="9.9999997e-05" Mass="10"/>
       </properties>
      </Component>
-     <Component CryXmlVersion="2" TypeGUID="6ddd0033-6aaa-4b71-b8ea-108258205e29" TypeName="Cry::DefaultComponents::CStaticMeshComponent" GUID="34d2cf6c-4194-ad0d-815f-3c483a8cd523" Name="" UserAdded="true">
-      <Transform>
-       <translation>
-        <position>
-         <element element="0"/>
-         <element element="0"/>
-         <element element="0.10000002"/>
-        </position>
-       </translation>
-       <rotation x="0" y="-0" z="0"/>
-       <scale>
-        <element element="200"/>
-        <element element="200"/>
-        <element element="1"/>
-       </scale>
-      </Transform>
-      <properties Type="Render" FilePath="%engine%/engineassets/objects/primitive_box.cgf" Material="%engine%/engineassets/materials/material_layers_default.mtl">
-       <Render ShadowSpec="Low" IgnoreVisArea="false" ViewDistRatio="100" LODDistance="100" GIMode="None"/>
-       <Physics WeightType="EWeightType::Mass" Density="9.9999997e-05" Mass="10"/>
+     <Component CryXmlVersion="2" TypeGUID="912c6ce8-56f7-4ffa-9134-f98d4e307bd6" TypeName="Cry::DefaultComponents::CRigidBodyComponent" GUID="a791d329-8a39-dc25-c126-0ed874ea2dc5" Name="" UserAdded="true">
+      <properties Networked="false" EnabledByDefault="true" Resting="false" Type="Static" SendCollisionSignal="false">
+       <Buoyancy Damping="1" Density="1" Resistance="1"/>
       </properties>
      </Component>
     </Components>

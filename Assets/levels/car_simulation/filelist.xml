@@ -1,6 +1,7 @@
 <download name="car_simulation" type="Map">
  <index src="filelist.xml" dest="filelist.xml"/>
  <files>
-  <file src="level.pak" dest="level.pak" size="11180630" md5="b00486ddfc7e918b2d6b69143be3535a"/>
+  <file src="car_simulation.xml" dest="car_simulation.xml" size="141" md5="dd78034a0f6b6dcd15d4505e8d898228"/>
+  <file src="level.pak" dest="level.pak" size="11181142" md5="d94c52bbdfabb57568b3836706b7b8d5"/>
  </files>
 </download>

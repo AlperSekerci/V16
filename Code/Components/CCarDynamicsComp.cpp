@@ -30,6 +30,17 @@ void CCarDynamicsComp::Initialize()
 	m_pController->Init();
 
 	mHalfWheelbase = mWheelbase * 0.5f;
+
+	pe_simulation_params psp;
+
+	//IPhysicalEntity* pPhys = m_pEntity->GetPhysicalEntity();
+	//if (pPhys)
+	//{
+	//	pe_simulation_params psp;
+	//	pPhys->GetParams(&psp);
+	//	psp.maxFriction = 11000.01f;
+	//	pPhys->SetParams(&psp);
+	//}
 }
 
 uint64 CCarDynamicsComp::GetEventMask() const
@@ -75,7 +86,7 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 
 		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt * 10;
 		// Vec3 gasForce = m_pEntity->GetForwardDir() * 1;
-		// gasForce += Vec3(0, 0, -100);
+		// gasForce += Vec3(0, 0, 13 * dt / 8);
 		m_pRigidBody->ApplyImpulse(gasForce);
 		// gEnv->pAuxGeomRenderer->DrawLine(m_pEntity->GetWorldPos(), Col_Black, m_pEntity->GetWorldPos() + gasForce, Col_Black, 10);
 
@@ -122,6 +133,10 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		Vec3 newVel = worldRot * localVel;
 		Vec3 newAngVel = worldRot * localAngVel;
 
+		/*newVel.z = 0;
+		newAngVel.x = 0;
+		newAngVel.y = 0;*/
+
 		m_pRigidBody->SetVelocity(newVel);
 		m_pRigidBody->SetAngularVelocity(newAngVel);
 	}
@@ -148,7 +163,7 @@ float CCarDynamicsComp::GetDeviceGas(Vec3 vel)
 	{
 		if (vel.GetLength() < CAR_BRAKE_MIN)
 		{
-			// m_pRigidBody->SetVelocity(ZERO);		
+			m_pRigidBody->SetVelocity(ZERO);		
 			return 0;
 		}
 		
