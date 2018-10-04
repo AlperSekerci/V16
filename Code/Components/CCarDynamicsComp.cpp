@@ -79,7 +79,11 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		m_pRigidBody->ApplyImpulse(gasForce);
 		// gEnv->pAuxGeomRenderer->DrawLine(m_pEntity->GetWorldPos(), Col_Black, m_pEntity->GetWorldPos() + gasForce, Col_Black, 10);
 
+		Vec2 backVel;
+		backVel.x = localVel.x + mHalfWheelbase * localAngVel.z;
+
 		driftVel = 10;
+		float driftRatio = 0.4f;
 
 		Vec2 frontVel;
 		frontVel.x = localVel.x - mHalfWheelbase * localAngVel.z;
@@ -89,14 +93,11 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		Vec2 frontStaticDir = Vec2(cosf(steerAngle), sinf(steerAngle));		
 		// Vec2 frontDir = Vec2(-frontStaticDir.y, frontStaticDir.x);
 
-		float reducedFront = frontStaticDir.Dot(frontVel) - driftVel;
+		float reducedFront = frontStaticDir.Dot(frontVel) - driftVel * driftRatio;
 		Vec2 reducedFrontVec = -frontStaticDir * reducedFront;
 		Vec2 targetFrontVel = frontVel + reducedFrontVec;
 		// targetFrontVel += frontDir * (GetDeviceGas(worldVel) * dt * 10);
 
-		Vec2 backVel;
-		backVel.x = localVel.x + mHalfWheelbase * localAngVel.z;
-		
 		Matrix33 matrix;
 		Vec3 target;
 
