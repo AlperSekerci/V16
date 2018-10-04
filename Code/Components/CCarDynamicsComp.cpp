@@ -76,59 +76,34 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt;
 		// Vec3 gasForce = m_pEntity->GetForwardDir() * 1;
 		// gasForce += Vec3(0, 0, 13 * dt / 8);
-		// m_pRigidBody->ApplyImpulse(gasForce);
+		m_pRigidBody->ApplyImpulse(gasForce);
 		// gEnv->pAuxGeomRenderer->DrawLine(m_pEntity->GetWorldPos(), Col_Black, m_pEntity->GetWorldPos() + gasForce, Col_Black, 10);
+
+		driftVel = 10;
 
 		Vec2 frontVel;
 		frontVel.x = localVel.x - mHalfWheelbase * localAngVel.z;
 		frontVel.y = localVel.y;
 
 		float steerAngle = GetDeviceSteerAngle();
-		Vec2 frontStaticDir = Vec2(cosf(steerAngle), sinf(steerAngle));
-		Vec2 frontDir = Vec2(-frontStaticDir.y, frontStaticDir.x);
+		Vec2 frontStaticDir = Vec2(cosf(steerAngle), sinf(steerAngle));		
+		// Vec2 frontDir = Vec2(-frontStaticDir.y, frontStaticDir.x);
 
-		float reducedFront = frontStaticDir.Dot(frontVel);
+		float reducedFront = frontStaticDir.Dot(frontVel) - driftVel;
 		Vec2 reducedFrontVec = -frontStaticDir * reducedFront;
 		Vec2 targetFrontVel = frontVel + reducedFrontVec;
 		// targetFrontVel += frontDir * (GetDeviceGas(worldVel) * dt * 10);
 
 		Vec2 backVel;
 		backVel.x = localVel.x + mHalfWheelbase * localAngVel.z;
-		// float backMag = m_pRigidBody->GetVelocity().GetLength();
-		float backMag = abs(backVel.x);
 		
-		if (backMag > CAR_DRIFT_THRESHOLD)
-		{
-			driftVel = CAR_DRIFT_FORCE;
-		}
-		else
-		{
-			driftVel = 0;
-		}
-
-		if (backVel.x < 0) driftVel = -driftVel;
-
-		/*if (backMag > CAR_DRIFT_THRESHOLD)
-			driftVel += CAR_DRIFT_FORCE * dt;
-		else 
-			driftVel -= CAR_DRIFT_FORCE * dt;
-
-		if (driftVel > CAR_DRIFT_CLAMP)
-			driftVel = CAR_DRIFT_CLAMP;
-		else if (driftVel < 0) 
-			driftVel = 0;*/
-
-		// CryLog("backMag - driftVel: %f - %f", backMag, driftVel);
-
-		driftVel = backVel.x;
-
 		Matrix33 matrix;
 		Vec3 target;
 
 		matrix.m00 = 1;
 		matrix.m01 = 0;
 		matrix.m02 = -mHalfWheelbase;
-		target.x = targetFrontVel.x + driftVel;
+		target.x = targetFrontVel.x;
 
 		matrix.m10 = 0;
 		matrix.m11 = 1;
@@ -156,19 +131,19 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		newAngVel.x = 0;
 		newAngVel.y = 0;*/
 
-		//m_pRigidBody->SetVelocity(newVel);
-		//m_pRigidBody->SetAngularVelocity(newAngVel);
+		m_pRigidBody->SetVelocity(newVel);
+		m_pRigidBody->SetAngularVelocity(newAngVel);
 	}
 	break;
 	case ENTITY_EVENT_RESET:
 	{
-		m_pRigidBody->SetVelocity(Vec3(100,0,0));
+		m_pRigidBody->SetVelocity(ZERO);
 		m_pRigidBody->SetAngularVelocity(ZERO);
 
-		pe_action_impulse impulse;
+		/*pe_action_impulse impulse;
 		impulse.impulse = m_pEntity->GetRightDir() * 1000;
 		impulse.point = m_pEntity->GetWorldPos() - m_pEntity->GetForwardDir();
-		m_pEntity->GetPhysicalEntity()->Action(&impulse);
+		m_pEntity->GetPhysicalEntity()->Action(&impulse);*/
 	}
 	break;
 	}
