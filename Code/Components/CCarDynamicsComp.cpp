@@ -90,7 +90,7 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		Vec3 localVel = invertedWorldRot * worldVel;
 		Vec3 localAngVel = invertedWorldRot * worldAngVel;
 
-		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt;
+		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt * 10;
 		// Vec3 gasForce = m_pEntity->GetForwardDir() * 1;
 		// gasForce += Vec3(0, 0, 13 * dt / 8);
 		m_pRigidBody->ApplyImpulse(gasForce);
@@ -104,14 +104,17 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		float steerAngle = GetDeviceSteerAngle();
 
 		float reqStaticForce = driftVel / dt;
-		CryLog("req static force: %f", reqStaticForce);
+		//CryLog("req static force: %f", reqStaticForce);
+		bool sliding = false;
 
 		bool handbrake = m_pController->GetCurrentState().buttons[CAR_HANDBRAKE];
 		if (abs(reqStaticForce) > (handbrake ? CAR_DRIFT_FORCE : CAR_DRIFT_THRESHOLD))
 		{
 			reqStaticForce = reqStaticForce > 0 ? CAR_DRIFT_FORCE : -CAR_DRIFT_FORCE;
+			sliding = true;
 		}
 
+		CryLog("sliding: %d", sliding ? 1 : 0);
 		driftVel -= reqStaticForce * dt;
 
 		/*float normSteer = (-CAR_MAX_STEER + -steerAngle + 0.5f) * 0.5f;
