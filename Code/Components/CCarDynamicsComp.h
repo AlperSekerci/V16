@@ -7,9 +7,12 @@
 #include "Common/ILogitechG920.h"
 
 #define CAR_BRAKE_MIN 1.0f
-#define CAR_DRIFT_THRESHOLD 0.5f
-#define CAR_DRIFT_CLAMP 10.0f
-#define CAR_DRIFT_FORCE 3.0f
+#define CAR_DRIFT_THRESHOLD 300.0f
+#define CAR_DRIFT_FORCE 150.0f
+#define CAR_DRIFT_ROT_AMOUNT 0.15f
+
+#define CAR_HANDBRAKE 1
+#define CAR_MAX_STEER 1.0f
 
 class CCarDynamicsComp final : public IEntityComponent
 {
@@ -17,7 +20,7 @@ private:
 	Cry::DefaultComponents::CRigidBodyComponent *m_pRigidBody;
 
 	ILogitechG920 *m_pController;
-
+	
 	MyCamera *m_pCamera;
 	void CreateCamera();
 	void MakeCamFollow();
@@ -32,6 +35,9 @@ private:
 	float GetDeviceSteerAngle();
 
 	float driftVel = 0;
+	bool mPressing[1];
+
+	void KeyAction(int activationMode, int key);
 
 public:
 	CCarDynamicsComp() = default;

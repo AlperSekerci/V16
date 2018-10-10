@@ -29,7 +29,24 @@ void CCarDynamicsComp::Initialize()
 	if (pPlugin) m_pController = pPlugin->GetLogitechG920();
 	m_pController->Init();
 
+	/*Cry::DefaultComponents::CInputComponent *m_pInputComponent = m_pEntity->GetOrCreateComponent<Cry::DefaultComponents::CInputComponent>();
+
+	m_pInputComponent->RegisterAction("car", "handbrake", [this](int activationMode, float value) { KeyAction(activationMode, CAR_HANDBRAKE); });
+	m_pInputComponent->BindAction("car", "handbrake", eAID_KeyboardMouse, (EKeyId)eKI_LogitechG920_Button_B);*/
+
 	mHalfWheelbase = mWheelbase * 0.5f;
+}
+
+void CCarDynamicsComp::KeyAction(int activationMode, int key)
+{
+	if (activationMode == eIS_Pressed)
+	{
+		mPressing[key] = true;
+	}
+	else if (activationMode == eIS_Released)
+	{
+		mPressing[key] = false;
+	}
 }
 
 uint64 CCarDynamicsComp::GetEventMask() const
@@ -81,15 +98,31 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 
 		Vec2 backVel;
 		backVel.x = localVel.x + mHalfWheelbase * localAngVel.z;
+		
+		driftVel = backVel.x;
+		float driftRatio = 1.0f;
+		float steerAngle = GetDeviceSteerAngle();
 
-		driftVel = 10;
-		float driftRatio = 0.4f;
+		float reqStaticForce = driftVel / dt;
+		CryLog("req static force: %f", reqStaticForce);
 
+		bool handbrake = m_pController->GetCurrentState().buttons[CAR_HANDBRAKE];
+		if (abs(reqStaticForce) > (handbrake ? CAR_DRIFT_FORCE : CAR_DRIFT_THRESHOLD))
+		{
+			reqStaticForce = reqStaticForce > 0 ? CAR_DRIFT_FORCE : -CAR_DRIFT_FORCE;
+		}
+
+		driftVel -= reqStaticForce * dt;
+
+		/*float normSteer = (-CAR_MAX_STEER + -steerAngle + 0.5f) * 0.5f;
+		driftRatio += normSteer * CAR_DRIFT_ROT_AMOUNT;
+		if (driftRatio > 1) driftRatio = 1;
+		CryLog("driftRatio: %f", driftRatio);*/
+		
 		Vec2 frontVel;
 		frontVel.x = localVel.x - mHalfWheelbase * localAngVel.z;
 		frontVel.y = localVel.y;
-
-		float steerAngle = GetDeviceSteerAngle();
+		
 		Vec2 frontStaticDir = Vec2(cosf(steerAngle), sinf(steerAngle));		
 		// Vec2 frontDir = Vec2(-frontStaticDir.y, frontStaticDir.x);
 

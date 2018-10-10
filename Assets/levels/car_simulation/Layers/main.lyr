@@ -1,7 +1,7 @@
 <ObjectLayer>
  <Layer Name="Main" FullName="Main" GUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Hidden="0" Frozen="0" Expanded="0" Type="0" Exportable="1" ExportLayerPak="1" DefaultLoaded="0" HavePhysics="1" IsDefaultColor="1">
   <LayerObjects>
-   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="5062bd81-5286-965f-2f3a-9848dd1660ff" Name="Car" Pos="516.638,584.08398,67.904137" Rotate="0.99999821,0,0,-0.0019285083" ColorRGB="65535" Material="%engine%/engineassets/objects/helper" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
+   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="5062bd81-5286-965f-2f3a-9848dd1660ff" Name="Car" Pos="450.25095,449.3858,67.904137" Rotate="0.99999821,0,0,-0.0019285083" ColorRGB="65535" Material="%engine%/engineassets/objects/helper" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
     <Properties />
     <Components>
      <Component CryXmlVersion="2" TypeGUID="912c6ce8-56f7-4ffa-9134-f98d4e307bd6" TypeName="Cry::DefaultComponents::CRigidBodyComponent" GUID="287a4314-9b3e-8b9c-1fed-232cf5afa01f" Name="" UserAdded="true">
@@ -87,7 +87,7 @@
      </Component>
     </Components>
    </Object>
-   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="b3aad7cb-e88e-0ba9-4a48-ad254267a474" Name="Entity-3" Pos="547.08282,391.98425,67.641396" Rotate="1,0,0,0" Scale="1000,1000,1" ColorRGB="65535" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
+   <Object Type="EmptyEntity" Layer="Main" LayerGUID="ff449bf2-e54d-9ef3-2668-7e605361fb0d" Id="b3aad7cb-e88e-0ba9-4a48-ad254267a474" Name="Entity-3" Pos="547.08282,391.98425,67.641396" Rotate="1,0,0,0" Scale="3000,3000,1" ColorRGB="65535" MatLayersMask="0" OutdoorOnly="0" CastShadow="1" CastShadowMinspec="1" DynamicDistanceShadows="0" GIMode="0" LodRatio="100" ViewDistRatio="100" HiddenInGame="0" RecvWind="0" RenderNearest="0" NoStaticDecals="0" EntityClass="Entity" HasEntity="1">
     <Properties />
     <Components>
      <Component CryXmlVersion="2" TypeGUID="6ddd0033-6aaa-4b71-b8ea-108258205e29" TypeName="Cry::DefaultComponents::CStaticMeshComponent" GUID="1d0daa36-d76c-44b6-777c-db25eb284cd7" Name="" UserAdded="true">
