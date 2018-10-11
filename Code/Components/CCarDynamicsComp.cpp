@@ -90,7 +90,7 @@ void CCarDynamicsComp::ProcessEvent(const SEntityEvent& event)
 		Vec3 localVel = invertedWorldRot * worldVel;
 		Vec3 localAngVel = invertedWorldRot * worldAngVel;
 
-		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt * 10;
+		Vec3 gasForce = m_pEntity->GetForwardDir() * GetDeviceGas(worldVel) * dt;
 		// Vec3 gasForce = m_pEntity->GetForwardDir() * 1;
 		// gasForce += Vec3(0, 0, 13 * dt / 8);
 		m_pRigidBody->ApplyImpulse(gasForce);
